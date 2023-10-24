@@ -4,15 +4,21 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -31,8 +37,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    LemonadeApp()
 
+                        LemonadeApp()
                 }
             }
         }
@@ -41,28 +47,51 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun LemonadeApp(){
-    LemonadeWithImage()
+    var currentStep by remember {mutableStateOf(1)}
+    var squeezeCount by remember {mutableStateOf (0)}
+    when(currentStep){
+        1 -> LemonadeWithImage(
+            textLabel = R.string.lemon_tree,
+            drawableRes = R.drawable.lemon_tree,
+            onImageClick = {
+                currentStep =2
+                squeezeCount = (2 ..4).random()
+            }
+        )
+
+    }
+
 }
 
-@Preview(showBackground = true)
 @Composable
-fun LemonadeWithImage(modifier:Modifier = Modifier
+fun LemonadeWithImage(textLabel: Int,drawableRes:Int,onImageClick:()->Unit,modifier:Modifier = Modifier
     .fillMaxSize()
     .wrapContentSize(Alignment.Center)
 ){Column(
     modifier = Modifier,
     horizontalAlignment = Alignment.CenterHorizontally
 ){
-    Image(
-        painter = painterResource(R.drawable.lemon_tree),
-        contentDescription = null
+    Button(
+        onClick = onImageClick
+    ){
+        Image(
+            painter = painterResource(R.drawable.lemon_tree),
+            contentDescription = null,
 
-    )
+            )
+    }
     Spacer(modifier = Modifier.height(25.dp))
     Text(
         text = stringResource(R.string.lemon_tree)
 
     )
 }
+
+}
+@Preview(showBackground = true)
+@Composable
+fun LemonPreview(){
+
+        LemonadeApp()
 
 }
