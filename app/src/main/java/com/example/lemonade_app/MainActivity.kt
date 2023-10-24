@@ -58,6 +58,27 @@ fun LemonadeApp(){
                 squeezeCount = (2 ..4).random()
             }
         )
+        2 -> LemonadeWithImage(
+            textLabel = R.string.lemon ,
+            drawableRes =R.drawable.lemon_tree ,
+            onImageClick = {
+                squeezeCount--
+                if(squeezeCount ==0){
+                    currentStep = 3
+                }
+            })
+        3 -> LemonadeWithImage(
+            textLabel =R.string.glass_of_lemonade ,
+            drawableRes =R.drawable.lemon_drink ,
+            onImageClick = {
+                currentStep = 4
+            })
+        4 -> LemonadeWithImage(
+            textLabel = R.string.empty_glass,
+            drawableRes =R.drawable.lemon_restart ,
+            onImageClick = { 
+                currentStep = 1
+            })
 
     }
 
@@ -75,14 +96,14 @@ fun LemonadeWithImage(textLabel: Int,drawableRes:Int,onImageClick:()->Unit,modif
         onClick = onImageClick
     ){
         Image(
-            painter = painterResource(R.drawable.lemon_tree),
+            painter = painterResource(drawableRes),
             contentDescription = null,
 
             )
     }
     Spacer(modifier = Modifier.height(25.dp))
     Text(
-        text = stringResource(R.string.lemon_tree)
+        text = stringResource(textLabel)
 
     )
 }
