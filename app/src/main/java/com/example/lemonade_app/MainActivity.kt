@@ -62,21 +62,7 @@ fun LemonadeApp() {
     var squeezeCount by remember { mutableStateOf(0) }
 
 
-    Box(
-        modifier = Modifier
-            .background(Color.Yellow)
-            .width(230.dp)
 
-    ) {
-        Text(
-            text = "Lemonade",
-            fontWeight = FontWeight.Bold,
-            fontSize = 20.sp,
-            modifier = Modifier
-                .padding(7.dp)
-                .align(alignment = Alignment.Center)
-        )
-    }
         when (currentStep) {
             1 -> LemonadeWithImage(
                 textLabel = R.string.lemon_tree,
@@ -121,17 +107,35 @@ fun LemonadeWithImage(textLabel: Int,drawableRes:Int,onImageClick:()->Unit,modif
     .wrapContentSize(Alignment.Center)
 ){
 
-    Column(
-    modifier = Modifier
-        .padding(top = 60.dp),
-    horizontalAlignment = Alignment.CenterHorizontally,
-    verticalArrangement = Arrangement.Center,
-){
 
+    Column(
+    modifier = Modifier,
+    horizontalAlignment = Alignment.CenterHorizontally,
+
+){
+        Box(
+            modifier = Modifier
+                .background(Color.Yellow)
+                .fillMaxWidth()
+
+
+        ) {
+            Text(
+                text = "Lemonade",
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp,
+                modifier = Modifier
+                    .padding(7.dp)
+                    .align(alignment = Alignment.Center)
+
+            )
+        }
     Button(
         onClick = onImageClick,
         shape = RoundedCornerShape(20),
-        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiaryContainer)
+        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiaryContainer),
+        modifier = Modifier
+            .padding(top = 30.dp)
     ){
         Image(
             painter = painterResource(drawableRes),
